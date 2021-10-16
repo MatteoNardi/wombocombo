@@ -93,6 +93,8 @@ fn tools_print_keycode_state(state: &State, compose_state: &compose::State, keyc
         syms = vec![state.key_get_one_sym(keycode)]
     }
 
+    print!("keycode [ {} ] ", keycode);
+
     print!("keysyms [ ");
     for keysym in syms {
         print!("{} ", keysym_get_name(keysym));
