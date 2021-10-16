@@ -1,4 +1,4 @@
-use evdev::{Device, InputEvent, InputEventKind, Key};
+use evdev::{Device, InputEventKind, Key};
 use xkbcommon::{
     self,
     xkb::{
@@ -9,11 +9,9 @@ use xkbcommon::{
 
 const KEYCODE_OFFSET: u16 = 8;
 const KEY_STATE_RELEASE: i32 = 0;
-const KEY_STATE_PRESS: i32 = 1;
 const KEY_STATE_REPEAT: i32 = 2;
 
 fn main() {
-    println!("Hello, world!");
     let mut device = Device::open("/dev/input/by-id/usb-04d9_USB_Keyboard-event-kbd").unwrap();
     // }
     // check if the device has an ENTER key
