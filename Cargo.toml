@@ -1,8 +1,11 @@
 [package]
 name = "wombocombo"
+description = "XKB keyboard customizer"
+license = "MIT"
 version = "0.1.0"
 authors = ["Matteo Nardi <commits@matteonardi.org>"]
 edition = "2018"
+repository = "https://github.com/MatteoNardi/wombocombo"
 
 [dependencies]
 xkbcommon = "0.4.0"
