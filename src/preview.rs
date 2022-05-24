@@ -7,8 +7,8 @@ use evdev::{Device, InputEventKind, Key};
 use xkbcommon::{
     self,
     xkb::{
-        self, compose, keysym_get_name, Context, KeyDirection, Keymap, State, COMPILE_NO_FLAGS,
-        CONTEXT_NO_FLAGS,
+        self, compose, ffi::XKB_STATE_MODS_EFFECTIVE, keysym_get_name, Context, KeyDirection,
+        Keymap, State, COMPILE_NO_FLAGS, CONTEXT_NO_FLAGS,
     },
 };
 
@@ -56,7 +56,7 @@ pub fn run_preview(path: &Path) -> Result<()> {
                 }
 
                 if value != KEY_STATE_RELEASE {
-                    tools_print_keycode_state(&state, &compose_state, keycode);
+                    tools_print_keycode_state(&state, &compose_state, keycode)?;
                 }
 
                 if with_compose {
@@ -119,26 +119,27 @@ fn tools_print_keycode_state(
     print!("unicode [ {} ] ", s);
 
     let layout = state.key_get_layout(keycode);
-    print!(
-        "layout [ {} ({}) ] ",
-        keymap.layout_get_name(layout),
-        layout
-    );
+    // print!(
+    //     "layout [ {} ({}) ] ",
+    //     keymap.layout_get_name(layout),
+    //     layout
+    // );
 
     print!("level [ {} ] ", state.key_get_level(keycode, layout));
 
-    //print!("mods [ ");
-    //for (xkb_mod_index_t mod = 0; mod < xkb_keymap_num_mods(keymap); mod++) {
-    //    if (xkb_state_mod_index_is_active(state, mod,
-    //                                      XKB_STATE_MODS_EFFECTIVE) <= 0)
-    //        continue;
-    //    if (xkb_state_mod_index_is_consumed2(state, keycode, mod,
-    //                                         consumed_mode))
-    //        print!("-%s ", xkb_keymap_mod_get_name(keymap, mod));
-    //    else
-    //        print!("%s ", xkb_keymap_mod_get_name(keymap, mod));
-    //}
-    //print!("] ");
+    print!("mods [ ");
+    for idx in 0..keymap.num_mods() {
+        if !state.mod_index_is_active(idx, XKB_STATE_MODS_EFFECTIVE) {
+            continue;
+        }
+        let prefix = if state.mod_index_is_consumed(keycode, idx) {
+            "-"
+        } else {
+            ""
+        };
+        print!("{}{} ", prefix, keymap.mod_get_name(idx));
+    }
+    print!("] ");
 
     //print!("leds [ ");
     //for (xkb_led_index_t led = 0; led < xkb_keymap_num_leds(keymap); led++) {
