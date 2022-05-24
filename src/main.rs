@@ -1,7 +1,11 @@
 mod config;
 mod preview;
 
-fn main() {
+use std::{fs, path::PathBuf};
+
+use anyhow::{bail, Context, Result};
+
+fn main() -> Result<()> {
     // Make sure we don't mess with our system while developing
     std::env::set_var("XDG_CONFIG_HOME", "/tmp/test_xkb");
     std::env::set_var("XKB_DEFAULT_OPTIONS", "custom:wombo,caps:ctrl_modifier");
@@ -33,5 +37,34 @@ fn main() {
     model.export().unwrap();
 
     // Run preview
-    preview::run_preview();
+    let real_device = pick_device()?;
+    preview::run_preview(&real_device)?;
+    Ok(())
+}
+
+fn pick_device() -> Result<PathBuf> {
+    let devices = list_devices()?;
+
+    println!("Pick a device to run simulation on:");
+    for (n, device) in devices.iter().enumerate() {
+        println!("{}: {:?}", n, device.path())
+    }
+    let mut buffer = String::new();
+    std::io::stdin()
+        .read_line(&mut buffer)
+        .context("reading user choice")?;
+    let choice: usize = buffer.trim().parse().context("input is not numeric")?;
+    if choice >= devices.len() {
+        bail!("invalid choice");
+    }
+    Ok(devices[choice].path())
+}
+
+const DEVICES: &'static str = "/dev/input/by-id/";
+
+fn list_devices() -> Result<Vec<fs::DirEntry>> {
+    fs::read_dir(DEVICES)
+        .with_context(|| format!("listing devices at {DEVICES}"))?
+        .collect::<Result<_, _>>()
+        .context("accessing device")
 }

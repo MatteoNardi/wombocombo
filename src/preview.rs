@@ -1,5 +1,8 @@
 //! Open an Evdev device in order to preview keyboard configurations.
 
+use std::{ffi::OsString, path::Path};
+
+use anyhow::{Context as AnyhowContext, Result};
 use evdev::{Device, InputEventKind, Key};
 use xkbcommon::{
     self,
@@ -13,8 +16,8 @@ const KEYCODE_OFFSET: u16 = 8;
 const KEY_STATE_RELEASE: i32 = 0;
 const KEY_STATE_REPEAT: i32 = 2;
 
-pub fn run_preview() {
-    let mut device = Device::open("/dev/input/by-id/usb-04d9_USB_Keyboard-event-kbd").unwrap();
+pub fn run_preview(path: &Path) -> Result<()> {
+    let mut device = Device::open(path).with_context(|| format!("opening {path:?}"))?;
     // check if the device has an ENTER key
     if device
         .supported_keys()
@@ -28,13 +31,16 @@ pub fn run_preview() {
     let with_compose = true;
 
     let context = Context::new(CONTEXT_NO_FLAGS);
-    let keymap = Keymap::new_from_names(&context, "", "", "", "", None, COMPILE_NO_FLAGS).unwrap();
+    let keymap = Keymap::new_from_names(&context, "", "", "", "", None, COMPILE_NO_FLAGS)
+        .context("creating keymap")?;
     let mut state = State::new(&keymap);
-    let compose_table = compose::Table::new_from_locale(&context, "C", COMPILE_NO_FLAGS).unwrap();
+    let compose_table =
+        compose::Table::new_from_locale(&context, &OsString::from("C"), COMPILE_NO_FLAGS)
+            .map_err(|_| anyhow::anyhow!("error creating compose table"))?;
     let mut compose_state = compose::State::new(&compose_table, COMPILE_NO_FLAGS);
 
     loop {
-        for event in device.fetch_events().unwrap() {
+        for event in device.fetch_events().context("fetching events")? {
             if let InputEventKind::Key(Key(keycode)) = event.kind() {
                 let value = event.value();
 
@@ -72,23 +78,27 @@ pub fn run_preview() {
     }
 }
 
-fn tools_print_keycode_state(state: &State, compose_state: &compose::State, keycode: u32) {
+fn tools_print_keycode_state(
+    state: &State,
+    compose_state: &compose::State,
+    keycode: u32,
+) -> Result<()> {
     let keymap = state.get_keymap();
 
     let mut syms: Vec<u32> = state.key_get_syms(keycode).into();
 
     if syms.len() == 0 {
-        return;
+        return Ok(());
     }
 
     let status = compose_state.status();
 
     if status == compose::Status::Composing || status == compose::Status::Cancelled {
-        return;
+        return Ok(());
     }
 
     if status == compose::Status::Composed {
-        syms = vec![compose_state.keysym().unwrap()];
+        syms = vec![compose_state.keysym().context("getting keysym")?];
     } else if syms.len() == 1 {
         syms = vec![state.key_get_one_sym(keycode)]
     }
@@ -102,7 +112,7 @@ fn tools_print_keycode_state(state: &State, compose_state: &compose::State, keyc
     print!("] ");
 
     let s = if status == compose::Status::Composed {
-        compose_state.utf8().unwrap()
+        compose_state.utf8().context("getting utf value")?
     } else {
         state.key_get_utf8(keycode)
     };
@@ -139,6 +149,7 @@ fn tools_print_keycode_state(state: &State, compose_state: &compose::State, keyc
     //print!("] ");
 
     print!("\n");
+    Ok(())
 }
 
 fn tools_print_state_changes(changed: u32) {
