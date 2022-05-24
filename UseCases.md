@@ -1,6 +1,8 @@
+# Use Cases
 
+This is a list of use cases achievable using xkb configuration.
 
-# Map Super+alphakey to other key
+## Map Super+alphakey to other key
 
 https://geekhack.org/index.php?topic=53137.msg
 
