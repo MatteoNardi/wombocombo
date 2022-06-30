@@ -6,6 +6,7 @@ mod tests;
 use std::{fs, path::PathBuf};
 
 use anyhow::{bail, Context, Result};
+use preview::Preview;
 
 fn main() -> Result<()> {
     // Make sure we don't mess with our system while developing
@@ -19,9 +20,7 @@ fn main() -> Result<()> {
     model.export().unwrap();
 
     // Run preview
-    let real_device = pick_device()?;
-    preview::run_preview(&real_device)?;
-    Ok(())
+    Preview::new()?.read_from_device(&pick_device()?)
 }
 
 fn pick_device() -> Result<PathBuf> {
@@ -42,11 +41,13 @@ fn pick_device() -> Result<PathBuf> {
     Ok(devices[choice].path())
 }
 
-const DEVICES: &'static str = "/dev/input/by-path/";
+const DEVICES_BY_PATH: &'static str = "/dev/input/by-path/";
+const DEVICES_BY_ID: &'static str = "/dev/input/by-id/";
 
 fn list_devices() -> Result<Vec<fs::DirEntry>> {
-    fs::read_dir(DEVICES)
-        .with_context(|| format!("listing devices at {DEVICES}"))?
+    let search = |path| fs::read_dir(path).with_context(|| format!("listing devices at {path}"));
+    search(DEVICES_BY_ID)?
+        .chain(search(DEVICES_BY_PATH)?)
         .collect::<Result<_, _>>()
         .context("accessing device")
 }
