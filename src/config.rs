@@ -60,8 +60,11 @@ impl Model {
         Self { special_keys }
     }
 
-    pub fn add_special_key(&mut self, keycode: String, symbols: Vec<String>) {
-        self.special_keys.push(SpecialKey { keycode, symbols })
+    pub fn add_special_key(&mut self, keycode: &str, symbols: &str) {
+        self.special_keys.push(SpecialKey {
+            keycode: keycode.to_string(),
+            symbols: symbols.split(' ').map(|x| x.to_string()).collect(),
+        })
     }
 
     pub fn export(&self) -> Result<()> {

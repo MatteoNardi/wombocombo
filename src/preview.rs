@@ -119,11 +119,6 @@ fn tools_print_keycode_state(
     print!("unicode [ {} ] ", s);
 
     let layout = state.key_get_layout(keycode);
-    // print!(
-    //     "layout [ {} ({}) ] ",
-    //     keymap.layout_get_name(layout),
-    //     layout
-    // );
 
     print!("level [ {} ] ", state.key_get_level(keycode, layout));
 
@@ -140,14 +135,6 @@ fn tools_print_keycode_state(
         print!("{}{} ", prefix, keymap.mod_get_name(idx));
     }
     print!("] ");
-
-    //print!("leds [ ");
-    //for (xkb_led_index_t led = 0; led < xkb_keymap_num_leds(keymap); led++) {
-    //    if (xkb_state_led_index_is_active(state, led) <= 0)
-    //        continue;
-    //    print!("%s ", xkb_keymap_led_get_name(keymap, led));
-    //}
-    //print!("] ");
 
     print!("\n");
     Ok(())

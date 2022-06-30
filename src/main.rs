@@ -1,5 +1,7 @@
 mod config;
 mod preview;
+#[cfg(test)]
+mod tests;
 
 use std::{fs, path::PathBuf};
 
@@ -12,28 +14,8 @@ fn main() -> Result<()> {
 
     // Create an example configuration and save it
     let mut model = config::Model::new();
-    model.add_special_key(
-        "<AC10>".to_string(),
-        vec![
-            "semicolon".to_string(),
-            "colon".to_string(),
-            "b".to_string(),
-            "b".to_string(),
-            "b".to_string(),
-            "b".to_string(),
-        ],
-    );
-    model.add_special_key(
-        "<AE05>".to_string(),
-        vec![
-            "5".to_string(),
-            "percent".to_string(),
-            "0x20ac".to_string(),
-            "0x20ac".to_string(),
-            "0x20ac".to_string(),
-            "0x20ac".to_string(),
-        ],
-    );
+    model.add_special_key("<AC10>", "semicolon colon b b b b");
+    model.add_special_key("<AE05>", "5 percent 0x20ac 0x20ac 0x20ac 0x20ac");
     model.export().unwrap();
 
     // Run preview
@@ -60,7 +42,7 @@ fn pick_device() -> Result<PathBuf> {
     Ok(devices[choice].path())
 }
 
-const DEVICES: &'static str = "/dev/input/by-id/";
+const DEVICES: &'static str = "/dev/input/by-path/";
 
 fn list_devices() -> Result<Vec<fs::DirEntry>> {
     fs::read_dir(DEVICES)
