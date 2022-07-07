@@ -1,4 +1,5 @@
 mod config;
+mod keycodes;
 mod preview;
 #[cfg(test)]
 mod tests;

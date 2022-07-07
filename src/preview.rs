@@ -115,15 +115,15 @@ impl Preview {
 
 pub struct Output {
     /// keycode originating this change
-    keycode: u32,
+    pub keycode: u32,
     /// UTF8 output produced
-    utf8: String,
+    pub utf8: String,
     /// Keyboard level
-    level: u32,
+    pub level: u32,
     /// Active mods
-    mods: Vec<String>,
+    pub mods: Vec<String>,
     /// State change
-    state_change: u32,
+    pub state_change: u32,
 }
 
 impl Output {
