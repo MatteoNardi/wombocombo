@@ -1,0 +1,14 @@
+[package]
+name = "wombocombo"
+description = "XKB keyboard customizer"
+license = "MIT"
+version = "0.1.0"
+authors = ["Matteo Nardi <commits@matteonardi.org>"]
+edition = "2018"
+repository = "https://github.com/MatteoNardi/wombocombo"
+
+[dependencies]
+xkbcommon = { git = "https://github.com/rust-x-bindings/xkbcommon-rs" }
+evdev = "0.11.4"
+dirs = "4.0.0"
+anyhow = "1.0.57"
