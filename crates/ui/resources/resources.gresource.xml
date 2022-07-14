@@ -2,5 +2,6 @@
 <gresources>
   <gresource prefix="/org/gtk_rs/example/">
     <file compressed="true" preprocess="xml-stripblanks">main_window.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">preview.ui</file>
   </gresource>
 </gresources>

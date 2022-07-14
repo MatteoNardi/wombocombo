@@ -3,6 +3,8 @@ mod imp;
 use glib::Object;
 use gtk::{gio, glib, Application};
 
+use crate::preview::Preview;
+
 glib::wrapper! {
     pub struct MainWindow(ObjectSubclass<imp::MainWindow>)
         @extends gtk::ApplicationWindow, gtk::Window, gtk::Widget,
@@ -11,8 +13,8 @@ glib::wrapper! {
 }
 
 impl MainWindow {
-    pub fn new(app: &Application) -> Self {
-        // Create new window
+    pub fn new(app: &Application, preview: Preview) -> Self {
+        // TODO: find how to pass down preview
         Object::new(&[("application", app)]).expect("Failed to create MainWindow")
     }
 }
