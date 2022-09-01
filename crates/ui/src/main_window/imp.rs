@@ -3,12 +3,16 @@ use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{glib, Button, CompositeTemplate};
 
+use crate::preview::Preview;
+
 // Object holding the state
 #[derive(CompositeTemplate, Default)]
 #[template(resource = "/org/gtk_rs/example/main_window.ui")]
 pub struct MainWindow {
     #[template_child]
     pub button: TemplateChild<Button>,
+    #[template_child]
+    pub preview: TemplateChild<Preview>,
 }
 
 // The central trait for subclassing a GObject
@@ -34,10 +38,10 @@ impl ObjectImpl for MainWindow {
         // Call "constructed" on parent
         self.parent_constructed(obj);
 
-        // Connect to "clicked" signal of `button`
-        self.button.connect_clicked(move |button| {
+        let preview = self.preview.clone();
+        self.button.connect_clicked(move |_button| {
             // Set the label to "Hello World!" after the button has been clicked on
-            button.set_label("Hello World!");
+            preview.buffer().set_text("Hello World!");
         });
     }
 }

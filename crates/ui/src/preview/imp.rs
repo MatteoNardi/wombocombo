@@ -39,10 +39,4 @@ impl ObjectImpl for Preview {
 // Trait shared by all widgets
 impl WidgetImpl for Preview {}
 
-// Trait shared by all windows
-impl WindowImpl for Preview {}
-
-// Trait shared by all application windows
-impl ApplicationWindowImpl for Preview {}
-
 impl TextViewImpl for Preview {}
