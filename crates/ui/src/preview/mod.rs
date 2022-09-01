@@ -5,7 +5,7 @@ use gtk::glib;
 
 glib::wrapper! {
     pub struct Preview(ObjectSubclass<imp::Preview>)
-        @extends gtk::TextView, gtk::Widget,
+        @extends gtk::Box, gtk::Widget,
         @implements gtk::Buildable;
 }
 

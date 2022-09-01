@@ -21,7 +21,7 @@ impl ObjectSubclass for MainWindow {
     // `NAME` needs to match `class` attribute of template
     const NAME: &'static str = "MyGtkAppWindow";
     type Type = super::MainWindow;
-    type ParentType = gtk::ApplicationWindow;
+    type ParentType = adw::ApplicationWindow;
 
     fn class_init(klass: &mut Self::Class) {
         klass.bind_template();
@@ -38,19 +38,15 @@ impl ObjectImpl for MainWindow {
         // Call "constructed" on parent
         self.parent_constructed(obj);
 
-        let preview = self.preview.clone();
-        self.button.connect_clicked(move |_button| {
-            // Set the label to "Hello World!" after the button has been clicked on
-            preview.buffer().set_text("Hello World!");
-        });
+        //let preview = self.preview.clone();
+        // self.button.connect_clicked(move |_button| {
+        //     // Set the label to "Hello World!" after the button has been clicked on
+        //     preview.text.buffer().set_text("Hello World!");
+        // });
     }
 }
 
-// Trait shared by all widgets
 impl WidgetImpl for MainWindow {}
-
-// Trait shared by all windows
 impl WindowImpl for MainWindow {}
-
-// Trait shared by all application windows
 impl ApplicationWindowImpl for MainWindow {}
+impl AdwApplicationWindowImpl for MainWindow {}

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="MyGtkAppWindow" parent="GtkApplicationWindow">
+  <template class="MyGtkAppWindow" parent="AdwApplicationWindow">
     <property name="title">My GTK App</property>
     <child>
       <object class="GtkBox" id="my_box">
         <property name="orientation">vertical</property>
         <property name="spacing">25</property>
+        <child>
+          <object class="AdwHeaderBar" id="header"></object>
+        </child>
         <child>
           <object class="GtkButton" id="button">
             <property name="label">Press me!</property>
