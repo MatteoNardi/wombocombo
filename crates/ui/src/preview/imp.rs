@@ -1,6 +1,7 @@
+use adw::subclass::prelude::*;
+
+use adw::prelude::*;
 use glib::subclass::InitializingObject;
-use gtk::prelude::*;
-use gtk::subclass::prelude::*;
 use gtk::{glib, CompositeTemplate};
 
 // Object holding the state
@@ -28,7 +29,6 @@ impl ObjectSubclass for Preview {
 // Trait shared by all GObjects
 impl ObjectImpl for Preview {
     fn constructed(&self, obj: &Self::Type) {
-        // Call "constructed" on parent
         self.parent_constructed(obj);
 
         //TextViewExt::buffer();

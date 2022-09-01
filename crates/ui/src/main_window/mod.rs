@@ -1,8 +1,8 @@
 mod imp;
 
+use adw::subclass::prelude::*;
 use glib::Object;
-use gtk::subclass::prelude::*;
-use gtk::{gio, glib, Application};
+use gtk::{gio, glib};
 
 use crate::preview::Preview;
 
@@ -14,7 +14,7 @@ glib::wrapper! {
 }
 
 impl MainWindow {
-    pub fn new(app: &Application) -> Self {
+    pub fn new(app: &adw::Application) -> Self {
         Object::new(&[("application", app)]).expect("Failed to create MainWindow")
     }
 

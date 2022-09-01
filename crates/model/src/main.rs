@@ -1,13 +1,7 @@
-mod config;
-mod keycodes;
-mod preview;
-#[cfg(test)]
-mod tests;
-
 use std::{fs, path::PathBuf};
 
 use anyhow::{bail, Context, Result};
-use preview::Preview;
+use model::{config, preview::Preview};
 
 fn main() -> Result<()> {
     // Make sure we don't mess with our system while developing

@@ -1,5 +1,5 @@
 [package]
-name = "wombocombo"
+name = "model"
 description = "XKB keyboard customizer"
 license = "MIT"
 version = "0.1.0"
