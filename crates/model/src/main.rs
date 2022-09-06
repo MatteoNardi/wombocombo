@@ -1,7 +1,7 @@
-use std::{fs, path::PathBuf};
+use std::path::PathBuf;
 
 use anyhow::{bail, Context, Result};
-use model::{config, preview::Preview};
+use model::{config, discover::list_devices, preview::Preview};
 
 fn main() -> Result<()> {
     // Make sure we don't mess with our system while developing
@@ -34,15 +34,4 @@ fn pick_device() -> Result<PathBuf> {
         bail!("invalid choice");
     }
     Ok(devices[choice].path())
-}
-
-const DEVICES_BY_PATH: &'static str = "/dev/input/by-path/";
-const DEVICES_BY_ID: &'static str = "/dev/input/by-id/";
-
-fn list_devices() -> Result<Vec<fs::DirEntry>> {
-    let search = |path| fs::read_dir(path).with_context(|| format!("listing devices at {path}"));
-    search(DEVICES_BY_ID)?
-        .chain(search(DEVICES_BY_PATH)?)
-        .collect::<Result<_, _>>()
-        .context("accessing device")
 }

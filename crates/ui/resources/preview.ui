@@ -4,47 +4,18 @@
     <property name="orientation">vertical</property>
     <property name="spacing">25</property>
     <child>
-      <object class="AdwComboRow">
-        <property name="title" translatable="yes">Combo Row</property>
-        <property name="model">
-          <object class="GtkStringList">
-            <items>
-              <item translatable="yes">Hello</item>
-              <item translatable="yes">Foo</item>
-              <item translatable="yes">Bar</item>
-              <item translatable="yes">Baz</item>
-            </items>
+      <object class="GtkListBox">
+        <child>
+          <object class="AdwComboRow" id="combo">
+            <property name="title" translatable="yes">Combo Row</property>
+            <property name="model">
+              <object class="GtkStringList" id="devices"></object>
+            </property>
           </object>
-        </property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkDropDown">
-        <property name="model">
-          <object class="GtkStringList">
-            <items>
-              <item translatable="yes">Factory</item>
-              <item translatable="yes">Home</item>
-              <item translatable="yes">Subway</item>
-            </items>
-          </object>
-        </property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkTextView" id="text"></object>
-    </child>
-    <child>
-      <object class="AdwComboRow">
-        <property name="title" translatable="yes">Evviva</property>
-        <property name="model">
-          <object class="GtkStringList">
-            <items>
-              <item translatable="yes">Babel</item>
-              <item translatable="yes">Hello</item>
-            </items>
-          </object>
-        </property>
+        </child>
+        <child>
+          <object class="GtkTextView" id="text"></object>
+        </child>
       </object>
     </child>
   </template>

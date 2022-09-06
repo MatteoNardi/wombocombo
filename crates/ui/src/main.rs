@@ -2,7 +2,6 @@ mod main_window;
 mod preview;
 
 use adw::prelude::*;
-use main_window::MainWindow;
 
 const APP_ID: &str = "org.matteonardi.WomboCombo";
 
@@ -17,7 +16,7 @@ fn main() {
 }
 
 fn build_ui(app: &adw::Application) {
-    let window = MainWindow::new(app);
+    let window = main_window::MainWindow::new(app);
     let _preview = window.preview();
     window.present();
 }

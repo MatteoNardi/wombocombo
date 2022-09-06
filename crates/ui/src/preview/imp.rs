@@ -1,18 +1,22 @@
-use adw::subclass::prelude::*;
+use adw::{subclass::prelude::*, ComboRow};
 
 use adw::prelude::*;
 use glib::subclass::InitializingObject;
-use gtk::{glib, CompositeTemplate, TextView};
+use gtk::{glib, CompositeTemplate, StringList, TextView};
+use model::discover::list_devices;
 
 // Object holding the state
 #[derive(CompositeTemplate, Default)]
 #[template(resource = "/org/gtk_rs/example/preview.ui")]
 pub struct Preview {
-    // TODO: find out why this doesn't activate
     // TODO: fill it with available devices
     // TODO: Add actual preview
     #[template_child]
     pub text: TemplateChild<TextView>,
+    #[template_child]
+    pub devices: TemplateChild<StringList>,
+    #[template_child]
+    pub combo: TemplateChild<ComboRow>,
 }
 
 // The central trait for subclassing a GObject
@@ -37,8 +41,21 @@ impl ObjectImpl for Preview {
     fn constructed(&self, obj: &Self::Type) {
         self.parent_constructed(obj);
 
-        //TextViewExt::buffer();
-        self.text.buffer().set_text("hello world from wombo");
+        match list_devices() {
+            Ok(devices) => {
+                for device in &devices {
+                    self.devices.append(&device.file_name().to_string_lossy());
+                }
+
+                let text_widget = self.text.clone();
+                self.combo.connect_selected_notify(move |combo| {
+                    let device = devices[combo.selected() as usize].path();
+                    let d = device.to_string_lossy();
+                    text_widget.buffer().set_text(&format!("Device {d}"));
+                });
+            }
+            Err(_) => todo!(),
+        }
     }
 }
 
