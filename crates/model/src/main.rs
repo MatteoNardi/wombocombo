@@ -19,11 +19,11 @@ fn main() -> Result<()> {
 }
 
 fn pick_device() -> Result<PathBuf> {
-    let devices = list_devices()?;
+    let devices = list_devices();
 
     println!("Pick a device to run simulation on:");
-    for (n, device) in devices.iter().enumerate() {
-        println!("{}: {:?}", n, device.path())
+    for (n, (path, _device)) in devices.iter().enumerate() {
+        println!("{}: {:?}", n, path)
     }
     let mut buffer = String::new();
     std::io::stdin()
@@ -33,5 +33,5 @@ fn pick_device() -> Result<PathBuf> {
     if choice >= devices.len() {
         bail!("invalid choice");
     }
-    Ok(devices[choice].path())
+    Ok(devices[choice].0.clone())
 }

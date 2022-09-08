@@ -1,13 +1,12 @@
-use anyhow::{Context, Result};
-use std::fs;
+use evdev::{Device, Key};
+use std::path::PathBuf;
 
-pub const DEVICES_BY_PATH: &'static str = "/dev/input/by-path/";
-pub const DEVICES_BY_ID: &'static str = "/dev/input/by-id/";
-
-pub fn list_devices() -> Result<Vec<fs::DirEntry>> {
-    let search = |path| fs::read_dir(path).with_context(|| format!("listing devices at {path}"));
-    search(DEVICES_BY_ID)?
-        .chain(search(DEVICES_BY_PATH)?)
-        .collect::<Result<_, _>>()
-        .context("accessing device")
+pub fn list_devices() -> Vec<(PathBuf, Device)> {
+    evdev::enumerate()
+        .filter(|(_, device)| {
+            device
+                .supported_keys()
+                .map_or(false, |keys| keys.contains(Key::KEY_ENTER))
+        })
+        .collect()
 }

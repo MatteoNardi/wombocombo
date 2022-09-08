@@ -41,21 +41,19 @@ impl ObjectImpl for Preview {
     fn constructed(&self, obj: &Self::Type) {
         self.parent_constructed(obj);
 
-        match list_devices() {
-            Ok(devices) => {
-                for device in &devices {
-                    self.devices.append(&device.file_name().to_string_lossy());
-                }
-
-                let text_widget = self.text.clone();
-                self.combo.connect_selected_notify(move |combo| {
-                    let device = devices[combo.selected() as usize].path();
-                    let d = device.to_string_lossy();
-                    text_widget.buffer().set_text(&format!("Device {d}"));
-                });
-            }
-            Err(_) => todo!(),
+        let devices = list_devices();
+        for (path, device) in &devices {
+            let path = dbg!(path.to_string_lossy());
+            self.devices
+                .append(&device.name().unwrap_or_else(|| path.as_ref()));
         }
+
+        let text_widget = self.text.clone();
+        self.combo.connect_selected_notify(move |combo| {
+            let device = &devices[combo.selected() as usize].0;
+            let d = device.to_string_lossy();
+            text_widget.buffer().set_text(&format!("Device {d}"));
+        });
     }
 }
 
