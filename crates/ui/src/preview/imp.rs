@@ -7,7 +7,7 @@ use model::discover::list_devices;
 
 // Object holding the state
 #[derive(CompositeTemplate, Default)]
-#[template(resource = "/org/gtk_rs/example/preview.ui")]
+#[template(resource = "/org/gtk_rs/example/ui/preview.ui")]
 pub struct Preview {
     // TODO: fill it with available devices
     // TODO: Add actual preview

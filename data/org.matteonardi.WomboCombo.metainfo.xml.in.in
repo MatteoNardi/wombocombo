@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Matteo Nardi 2019 <test@example.com> -->
+<component type="desktop-application">
+  <id>@app-id@</id>
+  <metadata_license>CC0</metadata_license>
+  <project_license>MIT</project_license>
+  <name>WomboCombo</name>
+  <summary>Keyboard configuration tool</summary>
+  <description>
+    <p>A keyboard configuration tool for the Linux XKB system</p>
+  </description>
+  <screenshots>
+    <!-- TODO: update this -->
+    <screenshot type="default">
+      <image>https://gitlab.gnome.org/bilelmoussaoui/hello/raw/master/data/resources/screenshots/screenshot1.png</image>
+      <caption>Main window</caption>
+    </screenshot>
+  </screenshots>
+  <url type="homepage">https://github.com/MatteoNardi/wombocombo</url>
+  <url type="bugtracker">https://github.com/MatteoNardi/wombocombo/issues</url>
+  <content_rating type="oars-1.0" />
+  <releases>
+    <release version="0.1.0" date="2019-07-11" />
+  </releases>
+  <kudos>
+     <!--
+       GNOME Software kudos:
+       https://gitlab.gnome.org/GNOME/gnome-software/-/blob/main/doc/kudos.md
+     -->
+     <kudo>ModernToolkit</kudo>
+     <kudo>HiDpiIcon</kudo>
+  </kudos>
+  <developer_name>Matteo Nardi</developer_name>
+  <!-- TODO: update this if this application becomes something -->
+  <update_contact>test@example.com</update_contact>
+  <translation type="gettext">@gettext-package@</translation>
+  <launchable type="desktop-id">@app-id@.desktop</launchable>
+</component>

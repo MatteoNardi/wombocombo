@@ -7,7 +7,7 @@ use crate::preview::Preview;
 
 // Object holding the state
 #[derive(CompositeTemplate, Default)]
-#[template(resource = "/org/gtk_rs/example/main_window.ui")]
+#[template(resource = "/org/gtk_rs/example/ui/main_window.ui")]
 pub struct MainWindow {
     #[template_child]
     pub button: TemplateChild<Button>,

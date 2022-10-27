@@ -1,0 +1,6 @@
+data/org.matteonardi.Hello.desktop.in.in
+data/org.matteonardi.Hello.gschema.xml.in
+data/org.matteonardi.Hello.metainfo.xml.in.in
+data/resources/ui/main_window.ui
+data/resources/ui/preview.ui
+src/application.rs

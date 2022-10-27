@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <!-- TODO: raname prefix -->
+  <gresource prefix="/org/gtk_rs/example/">
+    <file compressed="true" preprocess="xml-stripblanks">ui/main_window.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/preview.ui</file>
+  </gresource>
+</gresources>
