@@ -15,7 +15,7 @@ glib::wrapper! {
 
 impl MainWindow {
     pub fn new(app: &adw::Application) -> Self {
-        Object::new(&[("application", app)]).expect("Failed to create MainWindow")
+        Object::new(&[("application", app)])
     }
 
     pub fn preview(&self) -> Preview {

@@ -11,6 +11,6 @@ glib::wrapper! {
 
 impl Preview {
     pub fn new() -> Self {
-        Object::new(&[]).expect("Failed to create Preview")
+        Object::new(&[])
     }
 }

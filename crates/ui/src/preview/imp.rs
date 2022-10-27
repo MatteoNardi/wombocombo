@@ -38,8 +38,8 @@ impl ObjectSubclass for Preview {
 
 // Trait shared by all GObjects
 impl ObjectImpl for Preview {
-    fn constructed(&self, obj: &Self::Type) {
-        self.parent_constructed(obj);
+    fn constructed(&self) {
+        self.parent_constructed();
 
         let devices = list_devices();
         for (path, device) in &devices {

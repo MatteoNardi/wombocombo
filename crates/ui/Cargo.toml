@@ -5,10 +5,10 @@ edition = "2021"
 
 [dependencies]
 model = { path = "../model/" }
-gio = "0.15.12"
-glib = "0.15.12"
-gtk = { version = "0.4.8", package = "gtk4", features = ["v4_6"]}
+gio = "0.16.2"
+glib = "0.16.2"
+gtk = { version = "0.5.0", package = "gtk4", features = ["v4_6"]}
 adw = { version = "0.2.0-alpha.2", package = "libadwaita" }
 
 [build-dependencies]
-gtk = { version = "0.4.8", package = "gtk4", features = ["v4_6"]}
+glib-build-tools = "0.16.0"

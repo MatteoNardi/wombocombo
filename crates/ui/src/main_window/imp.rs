@@ -34,9 +34,9 @@ impl ObjectSubclass for MainWindow {
 
 // Trait shared by all GObjects
 impl ObjectImpl for MainWindow {
-    fn constructed(&self, obj: &Self::Type) {
+    fn constructed(&self) {
         // Call "constructed" on parent
-        self.parent_constructed(obj);
+        self.parent_constructed();
 
         //let preview = self.preview.clone();
         // self.button.connect_clicked(move |_button| {

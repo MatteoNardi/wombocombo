@@ -1,3 +1,14 @@
+// This requires super-user priviledges.
+//
+// TODO:
+// - Make this a dbus service which runs as root
+// - Add dbus activation on the system bus
+//   - This requires a rule
+// - Use polkit on the server
+//   - This requires another rule
+// - Pack everything in a flatpak
+//
+// https://ubuntuforums.org/showthread.php?t=1359397
 use evdev::{Device, Key};
 use std::path::PathBuf;
 

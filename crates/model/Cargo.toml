@@ -8,7 +8,7 @@ edition = "2018"
 repository = "https://github.com/MatteoNardi/wombocombo"
 
 [dependencies]
-xkbcommon = { git = "https://github.com/rust-x-bindings/xkbcommon-rs" }
+xkbcommon = "0.5" 
 evdev = "0.12.0"
 dirs = "4.0.0"
 anyhow = "1.0.57"
