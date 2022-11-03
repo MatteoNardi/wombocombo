@@ -1,0 +1,9 @@
+[package]
+name = "wombo_daemon"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+event-listener = "2.5.3"
+zbus = "3.4.0"
+zbus_polkit = "3.0.0"

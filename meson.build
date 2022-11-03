@@ -63,6 +63,8 @@ endif
 subdir('data')
 subdir('po')
 subdir('crates/ui/src/')
+subdir('crates/wombo_daemon/src/')
+subdir('crates/model/src/')
 
 gnome.post_install(
   gtk_update_icon_cache: true,

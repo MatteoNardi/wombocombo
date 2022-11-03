@@ -3,4 +3,5 @@
 members = [
     "crates/model",
     "crates/ui",
+    "crates/wombo_daemon",
 ]
